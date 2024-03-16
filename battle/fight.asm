@@ -1,4 +1,5 @@
 
+
 ; +----------------------------------------------------------------------------+
 ; |                                                                            |
 ; |                              FINAL FANTASY IV                              |
@@ -23,6 +24,16 @@ DoFightCmd:
         bmi     @c4a7       ; branch if monster attacker
 
 ; character attacker
+        ldx     $a6        ; current attacker
+        lda     $1032, x   ; relic equipment slot
+        cmp     #RELIC_MUG
+        bne @no_mug
+        jsr     Cmd_17
+        lda     #$17
+        sta     $34c8       ; set command name
+        lda     #$10
+        sta     $34c7       ; show command name
+@no_mug:
         lda     #$f8        ; display text
         sta     $33c6
         lda     #$04        ; damage numerals
@@ -178,7 +189,7 @@ DoFightCmd:
         sec
         lda     $38f8
         sbc     $38f9       ; subtract from number of hits
-        sta     $34c8
+        ; sta     $34c8
         sta     $38fc
         beq     @c5fe
         bcs     @c623
@@ -187,7 +198,7 @@ DoFightCmd:
 @c5fe:  clr_a
         sta     $38fc       ; zero hits
         inc
-        sta     $34c8       ; 1 hit ???
+        ; sta     $34c8       ; 1 hit ???
         lda     $ce
         sta     $a9
         bpl     @c611       ; branch if target is a character

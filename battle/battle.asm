@@ -17,6 +17,7 @@
 .include "hardware.inc"
 .include "macros.inc"
 .include "battle_data.asm"
+.include "relics.asm"
 
 .import ExecBtlGfx_ext
 .import ExecSound_ext
