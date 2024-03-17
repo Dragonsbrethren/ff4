@@ -499,7 +499,12 @@ UpdateMenu:
 .else
         beq     @a4c7       ; return if this is the other twin
 .endif
-@a4aa:  lda     $2033,x     ; left hand item
+@a4aa:  ; check wall ring here - may not be the best place?
+        lda     $2032,x     ; current character relic slot
+        cmp     #RELIC_WALLRING
+        beq     @WallRingEffect
+@AvengerCheck:
+        lda     $2033,x     ; left hand item
         cmp     #$4c
         beq     @a4b8       ; branch if avenger sword
         lda     $2035,x     ; right hand item
@@ -513,6 +518,14 @@ UpdateMenu:
 @a4c3:  clr_a               ; battle graphics $00: open menu
         jsr     ExecBtlGfx
 @a4c7:  rts
+
+; set wall status
+@WallRingEffect:
+        ldx    $a6
+        lda    $2006,x   ; status 3
+        ora    #$20      ; add wall
+        sta    $2006,x
+        jmp    @AvengerCheck
 
 ; ------------------------------------------------------------------------------
 
