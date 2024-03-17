@@ -1174,35 +1174,35 @@ Cmd_07:
         jsr     RandXA
         cmp     #$08
         bcs     @ea2c
-        lda     #$2a
+        lda     #$2a        ; stone
         bra     @ea6c
 @ea2c:  cmp     #$10
         bcs     @ea34
-        lda     #$26
+        lda     #$26        ; virus
         bra     @ea6c
 @ea34:  cmp     #$18
         bcs     @ea3c
-        lda     #$27
+        lda     #$27        ; weak
         bra     @ea6c
 @ea3c:  cmp     #$20
         bcs     @ea44
-        lda     #$2b
+        lda     #$2b        ; fatal
         bra     @ea6c
 @ea44:  cmp     #$38
         bcs     @ea4c
-        lda     #$1d
+        lda     #$1d        ; fire1
         bra     @ea6c
 @ea4c:  cmp     #$50
         bcs     @ea54
-        lda     #$20
+        lda     #$20        ; ice-1
         bra     @ea6c
 @ea54:  cmp     #$68
         bcs     @ea5c
-        lda     #$23
+        lda     #$23        ; lit-1
         bra     @ea6c
 @ea5c:  cmp     #$80
         bcs     @ea64
-        lda     #$19
+        lda     #$19        ; toad
         bra     @ea6c
 @ea64:  lda     #$09
         sta     $34ca
