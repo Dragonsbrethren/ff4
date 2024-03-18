@@ -756,32 +756,31 @@ DoMultiAttack:
         sta     $33c6
         lda     #$04        ; damage numerals
         sta     $33c7
-@e714:  lda     $3881
-        beq     @e71c
-        jmp     @e7f2
-@e71c:  ldx     $a6
-        lda     $201b,x
+@e714:  lda     $3881       ; monsters invincible?
+        bne     @e7f2
+@e71c:  ldx     $a6         ; current character
+        lda     $201b,x     ; attack multiplier
         sta     $df
         lda     $c1
         bne     @e72f
-        lsr     $df
+        lsr     $df         ; divide attack multiplier in half
         lda     $df
-        bne     @e72f
-        inc     $df
+        bne     @e72f       ; attack multiplier not zero
+        inc     $df         ; attack multiplier 1x
 @e72f:  lda     $df
-        sta     $84
-        lda     $201d,x
+        sta     $84         ; attack multiplier
+        lda     $201d,x     ; current character attack power
         sta     $c5
         sta     $e1
-        jsr     Mult8
-        lsr     $e4
-        ror     $e3
+        jsr     Mult8       ; attack multiplier * attack power
+        lsr     $e4         ; where is this initialized?
+        ror     $e3         ; divide result of multiplication by 2
         ldx     $e3
         stx     $cb
         lda     $cd
-        bmi     @e755
+        bmi     @e755       ; character attacker
         ldx     #5
-        stx     $c7
+        stx     $c7         ; 5 targets for monsters
         ldx     #13
         stx     $c3
         bra     @e75e
@@ -807,32 +806,32 @@ DoMultiAttack:
         lda     $c7
         jsr     SelectObj
         ldx     $a6
-        lda     $2003,x
+        lda     $2003,x     ; status 1
         and     #$c0
-        bne     @e7e4
-        lda     $2005,x
+        bne     @e7e4       ; branch if dead/stone
+        lda     $2005,x     ; status 3
         and     #$02
-        bne     @e7e4
-        lda     $2006,x
-        bmi     @e7e4
-        lda     $2040,x
+        bne     @e7e4       ; branch if jumping
+        lda     $2006,x     ; status 4
+        bmi     @e7e4       ; branch if hiding
+        lda     $2040,x     ; monster type
         and     #$20
-        bne     @e7e4
+        bne     @e7e4       ; branch if flan
         lda     $c1
         beq     @e7ae
-        lda     $2040,x
-        bpl     @e7ae
+        lda     $2040,x     ; monster type
+        bpl     @e7ae       ; branch if undead
         lsr     $ca
         ror     $c9
         lsr     $ca
         ror     $c9
 @e7ae:  lda     $c1
         bne     @e7d2
-        lda     $84
+        lda     $84         ; char attack multiplier
         sta     $df
-        lda     $202a,x
+        lda     $202a,x     ; defense
         sta     $e1
-        jsr     Mult8
+        jsr     Mult8       ; char attack multiplier * target defense
         sec
         lda     $c9
         sbc     $e3
