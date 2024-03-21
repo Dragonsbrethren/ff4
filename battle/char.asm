@@ -503,6 +503,8 @@ UpdateMenu:
         lda     $2032,x     ; current character relic slot
         cmp     #RELIC_WALLRING
         beq     @WallRingEffect
+        cmp     #RELIC_ANGELWING
+        beq     @AngelWingEffect
 @AvengerCheck:
         lda     $2033,x     ; left hand item
         cmp     #$4c
@@ -525,6 +527,13 @@ UpdateMenu:
         lda    $2006,x   ; status 3
         ora    #$20      ; add wall
         sta    $2006,x
+        jmp    @AvengerCheck
+
+@AngelWingEffect:
+        ldx    $a6
+        lda    $2004,x   ; status 2
+        ora    #$40      ; add float
+        sta    $2004,x
         jmp    @AvengerCheck
 
 ; ------------------------------------------------------------------------------
