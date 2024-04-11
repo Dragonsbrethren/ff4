@@ -540,7 +540,7 @@ BtnMapMenu:
 @d47e:  jsr     SelectBG2
         ldy     #.loword(BtnMapWindow)
         jsr     DrawWindow
-        ldy     #.loword(ConfigLabelWindow)
+        ldy     #.loword(CustomLabelWindow)
         jsr     DrawWindow
         ldy     #.loword(BtnMapPosText)
         jsr     DrawPosText
@@ -815,13 +815,13 @@ BtnMapMaxValue:
 
 MultiCtrlMenu:
 @d656:  jsr     SelectBG2
-        ldy     #.loword(ConfigLabelWindow)
+        ldy     #.loword(CustomLabelWindow)
         jsr     DrawWindow
         ldy     #.loword(MultiCtrlWindow)
         jsr     DrawWindowText
         stz     $48
         stz     $49
-        ldy     #$0212
+        ldy     #$0212             ; character cursor position
 @d66c:  ldx     $48
         lda     f:CharOrderTbl,x   ; character battle order
         phy

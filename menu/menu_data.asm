@@ -58,8 +58,8 @@
 
 .if LANG_EN
     ; some text is shifted in the english translation
-    EQUIP_PTXT_X = 13
     STATUS_LEVEL_X = 11
+    STATUS_LEVEL_Y = 2
     BUY_SELL_X = 3
     LOAD_CONFIRM_X2 = 24
     SAVE_COMPLETE_X = 24
@@ -70,14 +70,15 @@
     .endif
     FAT_CHOCO_MSG_X = 7
 .else
-    EQUIP_PTXT_X = 14
     STATUS_LEVEL_X = 10
+    STATUS_LEVEL_Y = 4
     BUY_SELL_X = 4
     LOAD_CONFIRM_X2 = 23
     SAVE_COMPLETE_X = 23
     BUG_TERMINATOR = 1
     FAT_CHOCO_MSG_X = 13
 .endif
+    EQUIP_PTXT_X = 13    ; same as English to accomodate "Accessory" string
 
 ; ------------------------------------------------------------------------------
 
@@ -220,8 +221,8 @@ ItemLabelPosText:
 @dd00:  def_ptxt 3,1,{ITEM_STR,0}
 
 ; *** this is unused ***
-RecoverHPPosText:
-@dd07:  def_ptxt 10,1,{RECOVER_HP_STR,0}
+; RecoverHPPosText:
+; @dd07:  def_ptxt 10,1,{RECOVER_HP_STR,0}
 
 ItemWhomPosText:
 @dd14:  def_ptxt 10,1,{ITEM_WHOM_STR,0}
@@ -326,7 +327,7 @@ EquipWindow:
 @ddc6:  def_ptxt EQUIP_PTXT_X,9,{EQUIP_SLOT5_STR,0}
 
 ; "もちものがいっぱいです" (inventory full) *** this is unused ***
-@ddcb:  def_ptxt 4,5,{INVENTORY_FULL_STR,0}
+; @ddcb:  def_ptxt 4,5,{INVENTORY_FULL_STR,0}
 
 ; item must be equipped with both hands
 EquipTwoHandWindow:
@@ -349,7 +350,7 @@ StatusLabelPosText:
 @de09:  def_ptxt 24,7,{STATUS_STR,0}
 
 StatusPosText:
-@de11:  def_ptxt STATUS_LEVEL_X,4,{STATUS_LEVEL_STR,1}
+@de11:  def_ptxt STATUS_LEVEL_X,STATUS_LEVEL_Y,{STATUS_LEVEL_STR,1}
         def_ptxt 17,6,{EXP_STR,1}
         def_ptxt 3,8,{HP_STR,1}
         def_ptxt 3,10,{MP_STR,1}
@@ -359,6 +360,15 @@ StatusPosText:
         def_ptxt 3,19,{STAMINA_STR,1}
         def_ptxt 3,21,{INTELLECT_STR,1}
         def_ptxt 3,23,{SPIRIT_STR,1}
+.if LANG_EN
+        def_ptxt 15,13,{ATTACK_STR,1}
+        def_ptxt 15,15,{HIT_RATE_STR,1}
+        def_ptxt 15,17,{DEFENSE_STR,1}
+        def_ptxt 15,19,{EVADE_STR,1}
+        def_ptxt 15,21,{MAG_DEF_STR,1}
+        def_ptxt 15,23,{MAG_EVADE_STR,1}
+        ; multiplier "x" now filled in by menu code
+.else
         def_ptxt 13,13,{ATTACK_STR,1}
         def_ptxt 13,15,{HIT_RATE_STR,1}
         def_ptxt 13,17,{DEFENSE_STR,1}
@@ -368,6 +378,7 @@ StatusPosText:
         def_ptxt 23,13,{MULT_STR,1}
         def_ptxt 23,17,{MULT_STR,1}
         def_ptxt 23,21,{MULT_STR,0}
+.endif
 
 NextLevelPosText:
 @de98:  def_ptxt 17,9,{NEXT_LEVEL_STR,0}
@@ -467,8 +478,8 @@ NewGamePosText:
 @dfc9:  def_ptxt 3,1,{NEW_GAME_STR,0}
 
 ; *** unused (carried over from ff3j-style load menu) ***
-LoadBattleSpeedPosText:
-@dfd2:  def_ptxt 20,1,{BATTLE_SPEED_STR,0}
+;LoadBattleSpeedPosText:
+;@dfd2:  def_ptxt 20,1,{BATTLE_SPEED_STR,0}
 
 LoadMsgWindow:
 @dfdc:  def_window 22,0,7,8
@@ -598,18 +609,21 @@ FatChocoMsg6PosText:
 
 .if LANG_EN
 ConfigLabelWindow:
-@dd47:  def_window 9,1,10,2
+@dd47:  def_window 8,1,13,2
+CustomLabelWindow:
+        def_window 8,1,12,2
 ConfigLabelPosText:
-@dd4b:  def_ptxt 10,2,{CUSTOMIZER_STR,0}
+@dd4b:  def_ptxt 9,2,{CONFIGURATION_STR,0}
 .else
 ConfigLabelWindow:
+CustomLabelWindow:
 @e15c:  def_window 10,1,7,2
 ConfigLabelPosText:
 @e160:  def_ptxt 12,2,{CONFIG_STR,0}
 .endif
 
 ConfigMainWindow:
-@e168:  def_window 2,4,24,20
+@e168:  def_window 2,4,25,20
 
 .if SIMPLE_CONFIG
 
@@ -631,14 +645,23 @@ BtnMapWindow: ; *** unused ***
 @e175:  def_ptxt 15,5,{WAIT_ACTIVE_STR,1}
 @e184:  def_ptxt 5,7,{BATTLE_SPEED_STR,1}
 @e18e:  def_ptxt 5,9,{BATTLE_MSG_STR,1}
+.if LANG_EN
+@e19a:  def_ptxt 6,20,{COLOR_STR,1}         ; draw color first so it can be
+        def_ptxt 5,19,{WINDOW_STR,1}                ; single spaced under window
+.else
 @e19a:  def_ptxt 5,19,{WINDOW_COLOR_STR,1}
+.endif
 @e1a4:  def_ptxt 15,13,{NORMAL_CUSTOM_STR,1}
 @e1b2:  def_ptxt 5,17,{CURSOR_POS_STR,1}
 @e1bb:  def_ptxt 15,17,{RESET_MEMORY_STR,1}
 @e1c8:  def_ptxt 5,11,{SOUND_STR,1}
 @e1df:  def_ptxt 15,11,{STEREO_MONO_STR,1}
 @e1dd:  def_ptxt 15,8,{FAST_STR,1}
+.if LANG_EN
+@e1e3:  def_ptxt 22,8,{SLOW_STR,1}            ; better align English "Slow" text
+.else
 @e1e3:  def_ptxt 23,8,{SLOW_STR,1}
+.endif
 @e1e9:  def_ptxt 15,15,{SINGLE_MULTI_STR,1}
 MultiCtrlPtxt:
 @e1f6:  def_ptxt 5,13,{MULTI_CTRL_STR,0}
@@ -647,7 +670,11 @@ BtnMapWindow:
 @e200:  def_window 0,7,28,12
 
 BtnMapPosText:
-@e204:  def_ptxt 11,2,{CUSTOMIZER_STR,1}
+.if LANG_EN
+@e204:  def_ptxt 10,2,{CUSTOMIZER_STR,1}
+.else
+@e204:  def_ptxt 12,2,{CUSTOMIZER_STR,1}
+.endif
 @e20d:  def_ptxt 3,8,{CONFIRM_STR,1}
 @e214:  def_ptxt 3,10,{CANCEL_STR,1}
 @e21b:  def_ptxt 3,12,{MENU_STR,1}
@@ -668,7 +695,9 @@ BtnList2Text:
 
 MultiCtrlWindow:
 @e263:  def_window 5,7,20,11
-.if !SIMPLE_CONFIG
+.if !SIMPLE_CONFIG && LANG_EN
+@e267:  def_ptxt 10,2,{CTRL_SELECT_STR,0}
+.else
 @e267:  def_ptxt 11,2,{CTRL_SELECT_STR,0}
 .endif
 

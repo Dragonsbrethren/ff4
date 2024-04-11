@@ -134,11 +134,11 @@ EquipMenu:
 
 SelectEquipSlot:
 
-.if LANG_EN
-        @SLOT_TEXT_X = 7
-.else
-        @SLOT_TEXT_X = 8
-.endif
+;.if LANG_EN
+        @SLOT_TEXT_X = 7    ; Japanese now uses 7 for "Accessory" string
+;.else
+;        @SLOT_TEXT_X = 8
+;.endif
 
 @bcf7:  jsr     SelectClearBG2
         lda     $1bad
@@ -261,11 +261,11 @@ SelectEquipSlot:
         asl4
         adc     #$10
         sta     $46
-.if LANG_EN
-        lda     #$58
-.else
-        lda     #$60
-.endif
+;.if LANG_EN
+        lda     #$58     ; cursor X position, same in JP/EN now
+;.else
+;        lda     #$60
+;.endif
         sta     $45
         jsr     DrawCursor1
         jsr     TfrBG2TilesVblank

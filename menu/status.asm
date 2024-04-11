@@ -81,51 +81,87 @@ StatusMenuMain:
         jsr     DrawStatusIcons
         ldy     #$0002
         lda     ($60),y
-        ldy     #$015c
+.if LANG_EN
+        ldy     #$00dc     ; Level pos
         jsr     DrawNum2
         ldy     #$0014
         lda     ($60),y
-        ldy     #$0412
+        ldy     #$0418     ; Strength pos
         jsr     DrawNum2
         ldy     #$0015
         lda     ($60),y
-        ldy     #$0492
+        ldy     #$0498     ; Agility pos
         jsr     DrawNum2
         ldy     #$0016
         lda     ($60),y
-        ldy     #$0512
+        ldy     #$0518     ; Vitality pos
         jsr     DrawNum2
         ldy     #$0017
         lda     ($60),y
-        ldy     #$0592
+        ldy     #$0598     ; Wisdom pos
         jsr     DrawNum2
         ldy     #$0018
         lda     ($60),y
-        ldy     #$0612
+        ldy     #$0618     ; Will pos
         jsr     DrawNum2
         ldy     #$001b
         lda     ($60),y
-        ldy     #$03aa
+        ldy     #$03ae     ; Attack multiplier
         jsr     DrawNum2
         ldy     #$0028
         lda     ($60),y
-        ldy     #$04aa
+        ldy     #$04ae     ; Defence multiplier
         jsr     DrawNum2
         ldy     #$0022
         lda     ($60),y
-        ldy     #$05aa
+        ldy     #$05ae     ; Magic Def. multiplier
+.else
+        ldy     #$015c     ; Level pos
+        jsr     DrawNum2
+        ldy     #$0014
+        lda     ($60),y
+        ldy     #$0412     ; Strength pos
+        jsr     DrawNum2
+        ldy     #$0015
+        lda     ($60),y
+        ldy     #$0492     ; Agility pos
+        jsr     DrawNum2
+        ldy     #$0016
+        lda     ($60),y
+        ldy     #$0512     ; Vitality pos
+        jsr     DrawNum2
+        ldy     #$0017
+        lda     ($60),y
+        ldy     #$0592     ; Wisdom pos
+        jsr     DrawNum2
+        ldy     #$0018
+        lda     ($60),y
+        ldy     #$0612     ; Will pos
+        jsr     DrawNum2
+        ldy     #$001b
+        lda     ($60),y
+        ldy     #$03aa     ; Attack multiplier
+        jsr     DrawNum2
+        ldy     #$0028
+        lda     ($60),y
+        ldy     #$04aa     ; Defence multiplier
+        jsr     DrawNum2
+        ldy     #$0022
+        lda     ($60),y
+        ldy     #$05aa     ; Magic Def. multiplier
+.endif
         jsr     DrawNum2
         ldy     #$001c
         lda     ($60),y
-        ldy     #$0434
+        ldy     #$0434     ; Attack %
         jsr     DrawNum2
         ldy     #$0029
         lda     ($60),y
-        ldy     #$0534
+        ldy     #$0534     ; Defence %
         jsr     DrawNum2
         ldy     #$0023
         lda     ($60),y
-        ldy     #$0634
+        ldy     #$0634     ; Magic Def. %
         jsr     DrawNum2
         ldy     #$0037
         lda     ($60),y
@@ -145,7 +181,7 @@ StatusMenuMain:
         jsr     _018383
         ldy     #$0009
         lda     ($60),y
-        ldy     #$0292
+        ldy     #$0290
         jsr     _018383
         ldy     #$000b
         lda     ($60),y
@@ -160,15 +196,15 @@ StatusMenuMain:
         xba
         ldy     #$001d
         lda     ($60),y
-        ldy     #$03b2
+        ldy     #$03b2       ; Attack pos
         jsr     DrawNum4
         ldy     #$002a
         lda     ($60),y
-        ldy     #$04b2
+        ldy     #$04b2       ; Defence pos
         jsr     DrawNum4
         ldy     #$0024
         lda     ($60),y
-        ldy     #$05b2
+        ldy     #$05b2       ; Magic Def. pos
         jsr     DrawNum4
         lda     ($60)
         and     #$c0
@@ -293,7 +329,14 @@ DrawStatusWindow:
         jsr     DrawPosText
 
 DrawStatusWindowSymbols:
-@abc2:  lda     #$c3                    ; ellipsis
+@abc2:  
+.if LANG_EN
+        lda     #$73     ; x
+        sta     $b9b2
+        sta     $bab2
+        sta     $bbb2
+.else
+        lda     #$c3                    ; ellipsis
         sta     $ba10
         sta     $ba90
         sta     $bb10
@@ -305,6 +348,7 @@ DrawStatusWindowSymbols:
         sta     $bb32
         sta     $bbb2
         sta     $bc32
+.endif
         lda     #$c6                    ; %
         sta     $ba38
         sta     $bb38

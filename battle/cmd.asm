@@ -757,7 +757,8 @@ DoMultiAttack:
         lda     #$04        ; damage numerals
         sta     $33c7
 @e714:  lda     $3881       ; monsters invincible?
-        bne     @e7f2
+        beq     @e71c
+        jmp     @e7f2
 @e71c:  ldx     $a6         ; current character
         lda     $201b,x     ; attack multiplier
         sta     $df
